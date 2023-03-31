@@ -58,10 +58,11 @@ func WatchBanFile() {
 			break
 		}
 
-		filePath := cfg.Global.Paths.DataFiles.Bans
+		filePath := cfg.Global.Paths.Folders.ServersRoot + cfg.Global.Paths.DataFiles.Bans
 		initialStat, erra := os.Stat(filePath)
 
 		if erra != nil {
+			cwlog.DoLogCW("WatchBanFile: stat")
 			time.Sleep(time.Minute)
 			continue
 		}
@@ -71,6 +72,7 @@ func WatchBanFile() {
 
 			stat, errb := os.Stat(filePath)
 			if errb != nil {
+				cwlog.DoLogCW("WatchBanFile: restat")
 				break
 			}
 
@@ -90,7 +92,7 @@ func ReadBanFile() {
 		return
 	}
 
-	file, err := os.Open(cfg.Global.Paths.DataFiles.Bans)
+	file, err := os.Open(cfg.Global.Paths.Folders.ServersRoot + cfg.Global.Paths.DataFiles.Bans)
 
 	if err != nil {
 		//log.Println(err)
